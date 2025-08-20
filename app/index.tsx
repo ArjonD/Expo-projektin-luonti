@@ -2,32 +2,33 @@ import React, { useState } from "react";
 import { Text, TextInput, View, Button, StyleSheet, Alert, KeyboardAvoidingView, Platform } from "react-native";
 
 export default function Index() {
-  const [num1, setNum1] = useState("");
-  const [num2, setNum2] = useState("");
-  const [result, setResult] = useState<number | null>(null);
+  const [correctNum, setCorrectNum] = useState(Math.floor(Math.random() * 100) + 1);
+  const [num, setNum] = useState("");
+  const [feedback, setFeedback] = useState("");
+  const [guessCount, setGuessCount] = useState(0);
 
-  const handleAddition = () => {
-    const parsedNum1 = parseFloat(num1);
-    const parsedNum2 = parseFloat(num2);
+  const handleGuess = () => {
+    const parsedNum = parseInt(num, 10);
 
-    if (isNaN(parsedNum1) || isNaN(parsedNum2)) {
-      Alert.alert("Virheellinen syöte", "Syötä vain numeroita.");
+    if (isNaN(parsedNum)) {
+      Alert.alert("Invalid input", "Please enter numbers only.");
       return;
     }
 
-    setResult(parsedNum1 + parsedNum2);
-  };
+    setGuessCount(guessCount + 1);
 
-  const handleSubtraction = () => {
-    const parsedNum1 = parseFloat(num1);
-    const parsedNum2 = parseFloat(num2);
-
-    if (isNaN(parsedNum1) || isNaN(parsedNum2)) {
-      Alert.alert("Virheellinen syöte", "Syötä vain numeroita.");
-      return;
+    if (parsedNum < correctNum) {
+      setFeedback("Too low");
+    } else if (parsedNum > correctNum) {
+      setFeedback("Too high");
+    } else {
+      Alert.alert("Correct!", `You guessed correctly in ${guessCount + 1} attempts.`);
+      setFeedback("Correct!");
+      setCorrectNum(Math.floor(Math.random() * 100) + 1);
+      setGuessCount(0);
     }
 
-    setResult(parsedNum1 - parsedNum2);
+    setNum("");
   };
 
   return (
@@ -36,26 +37,16 @@ export default function Index() {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <View style={styles.container}>
-        <Text style={styles.title}>Laskin</Text>
+        <Text style={styles.title}>Guessing Game</Text>
         <TextInput
           style={styles.input}
           keyboardType="numeric"
-          placeholder="Syötä ensimmäinen numero"
-          value={num1}
-          onChangeText={setNum1}
+          placeholder="Enter your guess"
+          value={num}
+          onChangeText={setNum}
         />
-        <TextInput
-          style={styles.input}
-          keyboardType="numeric"
-          placeholder="Syötä toinen numero"
-          value={num2}
-          onChangeText={setNum2}
-        />
-        <View style={styles.buttonContainer}>
-          <Button title="+" onPress={handleAddition} />
-          <Button title="-" onPress={handleSubtraction} />
-        </View>
-        {result !== null && <Text style={styles.result}>Tulos: {result}</Text>}
+        <Button title="Guess" onPress={handleGuess} />
+        {feedback !== "" && <Text style={styles.feedback}>{feedback}</Text>}
       </View>
     </KeyboardAvoidingView>
   );
@@ -82,14 +73,8 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     paddingHorizontal: 8,
   },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "60%",
-    marginVertical: 12,
-  },
-  result: {
-    fontSize: 20,
+  feedback: {
+    fontSize: 18,
     fontWeight: "bold",
     marginTop: 16,
   },
