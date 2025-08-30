@@ -1,81 +1,32 @@
-import React, { useState } from "react";
-import { Text, TextInput, View, Button, StyleSheet, Alert, KeyboardAvoidingView, Platform } from "react-native";
+import { Link } from "expo-router";
+import { StyleSheet, Text, View } from "react-native";
 
 export default function Index() {
-  const [correctNum, setCorrectNum] = useState(Math.floor(Math.random() * 100) + 1);
-  const [num, setNum] = useState("");
-  const [feedback, setFeedback] = useState("");
-  const [guessCount, setGuessCount] = useState(0);
 
-  const handleGuess = () => {
-    const parsedNum = parseInt(num, 10);
+  return <View style={styles.container}>
+    <Text>Week 1</Text>
+    <Link href="/hello" style={styles.link}>Hello World!</Link>
+    <Link href="/calculator" style={styles.link}>Calculator</Link>
+    <Link href="/guess" style={styles.link}>Guessing game</Link>
 
-    if (isNaN(parsedNum)) {
-      Alert.alert("Invalid input", "Please enter numbers only.");
-      return;
-    }
-
-    setGuessCount(guessCount + 1);
-
-    if (parsedNum < correctNum) {
-      setFeedback("Too low");
-    } else if (parsedNum > correctNum) {
-      setFeedback("Too high");
-    } else {
-      Alert.alert("Correct!", `You guessed correctly in ${guessCount + 1} attempts.`);
-      setFeedback("Correct!");
-      setCorrectNum(Math.floor(Math.random() * 100) + 1);
-      setGuessCount(0);
-    }
-
-    setNum("");
-  };
-
-  return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <View style={styles.container}>
-        <Text style={styles.title}>Guessing Game</Text>
-        <TextInput
-          style={styles.input}
-          keyboardType="numeric"
-          placeholder="Enter your guess"
-          value={num}
-          onChangeText={setNum}
-        />
-        <Button title="Guess" onPress={handleGuess} />
-        {feedback !== "" && <Text style={styles.feedback}>{feedback}</Text>}
-      </View>
-    </KeyboardAvoidingView>
-  );
+    <Text>Week 2</Text>
+    <Link href="/calc_history" style={styles.link}>Calculator with history</Link>
+  </View>;
 }
+
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    backgroundColor: "silver",
+    padding: 10,
+    gap: 10,
     justifyContent: "center",
     alignItems: "center",
-    padding: 16,
+    flex: 1
   },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 16,
-  },
-  input: {
-    width: "80%",
-    height: 50,
-    borderColor: "gray",
-    borderWidth: 1,
-    borderRadius: 4,
-    marginBottom: 12,
-    paddingHorizontal: 8,
-  },
-  feedback: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginTop: 16,
-  },
+  link: {
+    padding: 10,
+    backgroundColor: "lightblue",
+    borderRadius: 5
+  }
 });
