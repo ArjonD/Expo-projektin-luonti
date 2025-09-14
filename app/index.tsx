@@ -16,6 +16,10 @@ export default function Index() {
     <Text>Week 3</Text>
     <Link href="/calc" style={styles.link}>Calculator</Link>
     <Link href="/only_calc_history" style={styles.link}>Calculator history</Link>
+    
+    <Text>Week 4</Text>
+    <Link href ="/reseptit" style={styles.link}>Reseptilista</Link>
+    <Link href ="/exchange_rate" style={styles.link}>Exchange rate</Link>
 
   </View>;
 }
