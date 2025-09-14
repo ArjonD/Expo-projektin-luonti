@@ -144,9 +144,9 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
     },
     tableCell: {
-        flexBasis: "30%",    // 👈 ensures 3 columns fit (instead of flex:1)
+        flexBasis: "30%",    
         margin: 5,
-        height: 60,          // 👈 fixed height so text is always visible
+        height: 60,          
         backgroundColor: "#f0f0f0",
         borderRadius: 6,
         alignItems: "center",
@@ -157,10 +157,10 @@ const styles = StyleSheet.create({
     },
     cellText: {
         fontSize: 16,
-        color: "#000",       // 👈 always visible on light background
+        color: "#000",       
     },
     selectedText: {
-        color: "#fff",       // 👈 visible on blue selected background
+        color: "#fff",       
     },
 });
 
